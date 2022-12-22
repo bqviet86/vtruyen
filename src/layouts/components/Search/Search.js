@@ -8,10 +8,10 @@ import styles from './Search.module.scss'
 const cx = classNames.bind(styles)
 
 function Search() {
-    const [isShow, setIsShow] = useState(false)
+    const [showSearchForm, setShowSearchForm] = useState(false)
 
     const handleOpenSearchForm = () => {
-        setIsShow(true)
+        setShowSearchForm(true)
     }
 
     return (
@@ -22,7 +22,7 @@ function Search() {
             <button className={cx('search-btn')}>
                 <Icon icon="material-symbols:search-rounded" />
             </button>
-            <SearchForm isShow={isShow} setIsShow={setIsShow} />
+            <SearchForm showSearchForm={showSearchForm} setShowSearchForm={setShowSearchForm} />
         </div>
     )
 }

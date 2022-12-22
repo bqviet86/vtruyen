@@ -11,7 +11,7 @@ import styles from './Search.module.scss'
 
 const cx = classNames.bind(styles)
 
-function SearchForm({ isShow, setIsShow }) {
+function SearchForm({ showSearchForm, setShowSearchForm }) {
     const [searchValue, setSearchValue] = useState('')
     const [searchResult, setSearchResult] = useState([])
     const [loading, setLoading] = useState(false)
@@ -49,7 +49,7 @@ function SearchForm({ isShow, setIsShow }) {
     }
 
     const handleCloseForm = () => {
-        setIsShow(false)
+        setShowSearchForm(false)
     }
 
     const handleStopPropagation = (e) => {
@@ -57,7 +57,7 @@ function SearchForm({ isShow, setIsShow }) {
     }
 
     return (
-        <div className={cx('overlay', { show: isShow })} onClick={handleCloseForm}>
+        <div className={cx('overlay', { show: showSearchForm })} onClick={handleCloseForm}>
             <div className={cx('search-wrap')}>
                 <div className={cx('search-form')} onClick={handleStopPropagation}>
                     <div className={cx('header')}>

@@ -1,15 +1,15 @@
 import classNames from 'classnames/bind'
 import { Icon } from '@iconify/react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import NavbarItem from './NavbarItem'
 import Search from '../Search'
 import Menu from '~/components/Menu'
 import AuthForm from '~/components/AuthForm'
 import { useLogout } from '~/hooks'
-import { authFormSlice } from '~/redux/slice'
-import { showAuthFormSelector, userSelector } from '~/redux/selectors'
+import { userSelector } from '~/redux/selectors'
 import images from '~/assets/images'
 import styles from './Header.module.scss'
 
@@ -35,8 +35,7 @@ const navItems = [
 ]
 
 function Header({ primary, secondary }) {
-    const dispatch = useDispatch()
-    const isShow = useSelector(showAuthFormSelector)
+    const [showAuthForm, setShowAuthForm] = useState(false)
     const currentUser = useSelector(userSelector)
     const { logout } = useLogout()
 
@@ -61,7 +60,7 @@ function Header({ primary, secondary }) {
     ]
 
     const handleOpenAuthForm = () => {
-        dispatch(authFormSlice.actions.open())
+        setShowAuthForm(true)
     }
 
     return (
@@ -95,7 +94,7 @@ function Header({ primary, secondary }) {
                     </nav>
                 </div>
             </header>
-            <AuthForm isShow={isShow} />
+            <AuthForm showAuthForm={showAuthForm} setShowAuthForm={setShowAuthForm} />
         </>
     )
 }

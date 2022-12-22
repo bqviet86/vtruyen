@@ -1,21 +1,18 @@
 import classNames from 'classnames/bind'
 import { Icon } from '@iconify/react'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
 
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
-import { authFormSlice } from '~/redux/slice'
 import styles from './AuthForm.module.scss'
 
 const cx = classNames.bind(styles)
 
-function AuthForm({ isShow }) {
-    const dispatch = useDispatch()
+function AuthForm({ showAuthForm, setShowAuthForm }) {
     const [status, setStatus] = useState('login')
 
     const handleCloseForm = () => {
-        dispatch(authFormSlice.actions.close())
+        setShowAuthForm(false)
     }
 
     const handleStopPropagation = (e) => {
@@ -27,7 +24,7 @@ function AuthForm({ isShow }) {
     }
 
     return (
-        <div className={cx('overlay', { show: isShow })} onClick={handleCloseForm}>
+        <div className={cx('overlay', { show: showAuthForm })} onClick={handleCloseForm}>
             <div className={cx('wrapper')} onClick={handleStopPropagation}>
                 <div className={cx('header')}>
                     <div className={cx('close-btn')} onClick={handleCloseForm}>
