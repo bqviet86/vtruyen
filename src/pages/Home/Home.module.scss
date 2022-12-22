@@ -1,0 +1,23 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .slider-wrap {
+        margin-bottom: 20px;
+        max-width: 100%;
+        width: var(--width-layout);
+    }
+
+    .manga-trending {
+        margin-bottom: 30px;
+        padding: 20px 0;
+        width: 100%;
+        background: linear-gradient(0deg, #2c2c2c 0, var(--primary-bg-color) 100%);
+    }
+
+    .manga-recommended {
+        margin-bottom: 200px;
+        width: 100%;
+    }
+}

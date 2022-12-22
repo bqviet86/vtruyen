@@ -1,0 +1,8 @@
+.wrapper {
+    margin-bottom: 20px;
+    padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    width: var(--width-layout);
+}

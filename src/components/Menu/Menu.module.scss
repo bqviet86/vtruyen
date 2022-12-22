@@ -1,0 +1,34 @@
+.menu-list {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 6px;
+
+    .menu-item {
+        padding: 8px 12px;
+        display: flex;
+        align-items: center;
+        font-size: 1.3rem;
+        color: var(--secondary-text-color);
+        background-color: var(--tertiary-bg-color);
+        cursor: pointer;
+
+        &:hover {
+            color: var(--tertiary-text-color);
+            background-color: var(--quaternary-bg-color);
+        }
+
+        .icon {
+            display: flex;
+            font-size: 1.6rem;
+        }
+
+        .icon.icon-left {
+            margin-right: 8px;
+        }
+
+        .icon.icon-right {
+            margin-left: 8px;
+        }
+    }
+}

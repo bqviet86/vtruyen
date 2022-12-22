@@ -1,0 +1,116 @@
+.wrapper {
+    margin-right: 12px;
+    padding: 6px 20px;
+    min-width: 100px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem !important;
+    font-weight: 500;
+    font-family: var(--font-family);
+    line-height: 22px;
+    border-radius: 4px;
+    color: var(--quaternary-text-color);
+    background-color: #fff;
+    user-select: none;
+    cursor: pointer;
+
+    // &.disabled {
+    //     opacity: 0.65;
+    //     cursor: auto;
+    //     pointer-events: none;
+    // }
+
+    // &.iconLeft :first-child,
+    // &.iconRight :last-child {
+    //     font-size: 20px;
+    // }
+
+    &.iconLeft span {
+        margin-left: 8px;
+    }
+
+    &.iconRight span {
+        margin-right: 8px;
+    }
+}
+
+// .rounded {
+//     border-radius: 52px;
+
+//     &:hover {
+//         border-color: rgba(22, 24, 35, 0.2);
+//         background-color: var(--white);
+//     }
+// }
+
+// .outline {
+//     color: var(--primary);
+//     border-color: var(--primary);
+
+//     &:hover {
+//         border-color: var(--primary);
+//         background-color: #fe2c550f;
+//     }
+// }
+
+.primary {
+    background-color: var(--yellow-primary-color);
+}
+
+.secondary {
+    color: var(--primary-text-color);
+    background-color: var(--purple-primary-color);
+}
+
+.tertiary {
+    color: var(--secondary-text-color);
+    background-color: var(--secondary-bg-color);
+}
+
+.quaternary {
+    background-color: var(--tertiary-text-color);
+}
+
+// Button sizes
+.small {
+    margin: 0 5px 5px 0;
+    padding: 0 10px;
+    min-width: unset;
+    height: 30px;
+    font-size: 1.3rem !important;
+    font-weight: 400;
+}
+
+.small2 {
+    margin: 0 4px 4px 0;
+    padding: 4px 8px;
+    min-width: unset;
+    height: 28px;
+    font-size: 1.2rem !important;
+    font-weight: 400;
+}
+
+.medium2 {
+    padding: 6.4px;
+    min-width: 80px;
+    height: 32px;
+    height: 32px;
+    font-size: 1.26rem !important;
+    border-radius: 3.2px;
+}
+
+.large {
+    padding: 13px 10px;
+    font-size: 1.4rem;
+    font-weight: 400;
+}
+
+.large2 {
+    padding: 15px;
+    min-width: 132px;
+    height: 48px;
+    font-size: 1.4rem;
+    font-weight: 500;
+}

@@ -1,0 +1,192 @@
+// Auth Form
+.overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--overlay-color);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+    z-index: 1000;
+
+    &.show {
+        opacity: 1;
+        visibility: visible;
+
+        .wrapper {
+            transform: translateY(0);
+        }
+    }
+
+    .wrapper {
+        width: 500px;
+        border-radius: 20px;
+        background-color: var(--secondary-bg-color);
+        transform: translateY(-60px);
+        transition: all 0.3s ease-in-out;
+    }
+}
+
+.header {
+    position: relative;
+    padding: 30px 30px 0;
+    color: var(--secondary-text-color);
+
+    .close-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.8rem;
+        border-radius: 0 20px 0 20px;
+        background-color: var(--tertiary-bg-color);
+        cursor: pointer;
+    }
+
+    .title {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 600;
+    }
+}
+
+.body {
+    padding: 20px 60px;
+}
+
+.footer {
+    padding: 12px 12px 30px;
+    font-size: 1.6rem;
+    text-align: center;
+    color: var(--secondary-text-color);
+
+    & button {
+        margin-left: 6px;
+        font-size: 1.5rem;
+        color: var(--tertiary-text-color);
+        background-color: transparent;
+        cursor: pointer;
+    }
+}
+
+// Login Form & Signup Form
+.form-group {
+    margin-bottom: 20px;
+
+    .label {
+        margin-bottom: 8px;
+        display: block;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        opacity: 0.5;
+        color: var(--secondary-text-color);
+    }
+
+    .form-input {
+        padding: 12px 20px;
+        width: 100%;
+        font-size: 1.3rem;
+        border-radius: 3px;
+        color: var(--secondary-text-color);
+        background-color: var(--tertiary-bg-color);
+    }
+}
+
+.form-check {
+    display: flex;
+    justify-content: space-between;
+
+    .left {
+        display: flex;
+        align-items: center;
+
+        & input[type='checkbox'] {
+            width: 1.6rem;
+            height: 1.6rem;
+            opacity: 0;
+
+            &:checked ~ label::before {
+                border-color: var(--checkbox-color);
+                background-color: var(--checkbox-color);
+            }
+        }
+
+        & label {
+            position: relative;
+            margin-left: 8px;
+            font-size: 1.4rem;
+            color: var(--secondary-text-color);
+
+            &::before {
+                content: '';
+                position: absolute;
+                inset: 50% calc(100% + 8px) 0 auto;
+                width: 1.4rem;
+                height: 1.4rem;
+                border-radius: 4px;
+                border: 1px solid #adb5bd;
+                background-color: #fff;
+                transform: translateY(-50%);
+                transition: background-color 0.15s ease-in-out;
+            }
+
+            &::after {
+                content: '';
+                position: absolute;
+                inset: 50% calc(100% + 8px) 0 auto;
+                width: 1.6rem;
+                height: 1.6rem;
+                background-repeat: no-repeat;
+                background-size: 64%;
+                background-position: center;
+                background-image: url('/assets/images/checkbox.png');
+                transform: translateY(-50%);
+            }
+        }
+    }
+
+    .right button {
+        font-size: 1.4rem;
+        color: var(--tertiary-text-color);
+        background-color: transparent;
+        cursor: pointer;
+    }
+}
+
+.form-submit {
+    margin: 24px 0 8px;
+
+    .submit-btn {
+        padding: 12px;
+        width: 100%;
+        font-size: 1.4rem;
+        font-weight: 500;
+        border-radius: 4px;
+        color: #111;
+        background-color: var(--tertiary-text-color);
+        cursor: pointer;
+    }
+}
+
+.error {
+    margin-bottom: 16px;
+    padding: 12px 20px;
+    font-size: 13px;
+    line-height: 1.4em;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    background-color: #f8d7da;
+}
+
+.loading {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

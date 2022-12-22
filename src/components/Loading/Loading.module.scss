@@ -1,0 +1,126 @@
+.primary {
+    width: 40px;
+    transform-origin: center;
+    animation: rotate 2s linear infinite;
+
+    circle {
+        fill: none;
+        stroke-width: 2;
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+        stroke-linecap: round;
+        animation: dash 1.5s ease-in-out infinite;
+    }
+
+    @keyframes rotate {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes dash {
+        0% {
+            stroke-dasharray: 1, 200;
+            stroke-dashoffset: 0;
+        }
+        50% {
+            stroke-dasharray: 90, 200;
+            stroke-dashoffset: -35px;
+        }
+        100% {
+            stroke-dashoffset: -125px;
+        }
+    }
+}
+
+.secondary {
+    width: 2.5em;
+    height: 3em;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin-stretch 2s ease infinite;
+
+    @keyframes spin-stretch {
+        50% {
+            transform: rotate(360deg) scale(0.4, 0.33);
+            border-width: 8px;
+        }
+        100% {
+            transform: rotate(720deg) scale(1, 1);
+            border-width: 3px;
+        }
+    }
+}
+
+.tertiary {
+    width: 3.5em;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+
+    div {
+        width: 0.8em;
+        height: 0.8em;
+        border-radius: 50%;
+        transform: translateY(-100%);
+        animation: wave 0.8s ease-in-out alternate infinite;
+    }
+
+    div:nth-of-type(1) {
+        animation-delay: -0.4s;
+    }
+
+    div:nth-of-type(2) {
+        animation-delay: -0.2s;
+    }
+
+    @keyframes wave {
+        from {
+            transform: scale(0.5);
+        }
+        to {
+            transform: scale(1.2);
+        }
+    }
+}
+
+.quaternary {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 2em;
+
+    span {
+        width: 0.3em;
+        height: 1em;
+    }
+
+    span:nth-of-type(1) {
+        animation: grow 1s -0.45s ease-in-out infinite;
+    }
+
+    span:nth-of-type(2) {
+        animation: grow 1s -0.3s ease-in-out infinite;
+    }
+
+    span:nth-of-type(3) {
+        animation: grow 1s -0.15s ease-in-out infinite;
+    }
+
+    span:nth-of-type(4) {
+        animation: grow 1s ease-in-out infinite;
+    }
+
+    @keyframes grow {
+        0%,
+        100% {
+            transform: scaleY(1);
+        }
+
+        50% {
+            transform: scaleY(2);
+        }
+    }
+}
