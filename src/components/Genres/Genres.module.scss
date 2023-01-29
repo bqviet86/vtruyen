@@ -1,3 +1,5 @@
+@use '/src/components/GlobalStyles/GlobalStyles.module.scss' as styles;
+
 .wrapper {
     margin-bottom: 20px;
     padding: 0 20px;
@@ -5,4 +7,14 @@
     flex-wrap: wrap;
     max-width: 100%;
     width: var(--width-layout);
+
+    .btn {
+        @include styles.tablet {
+            @for $i from 14 through 55 {
+                &:nth-child(#{$i}) {
+                    display: none;
+                }
+            }
+        }
+    }
 }

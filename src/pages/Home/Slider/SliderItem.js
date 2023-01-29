@@ -2,16 +2,13 @@ import classNames from 'classnames/bind'
 import { Link } from 'react-router-dom'
 
 import Button from '~/components/Button'
+import { handleUrl } from '~/utils'
 import styles from './Slider.module.scss'
 import 'swiper/css/bundle'
 
 const cx = classNames.bind(styles)
 
 function SliderItem({ data, showEffect = false }) {
-    const handleSlug = (slug) => {
-        return slug.slice(0, slug.lastIndexOf('-'))
-    }
-
     return (
         <div className={cx('slider-wrap')}>
             <div className={cx('slider')}>
@@ -23,7 +20,7 @@ function SliderItem({ data, showEffect = false }) {
                 ></div>
                 <div className={cx('content')}>
                     <div className={cx('new-chapter')}>{data.newChapter}</div>
-                    <Link to={`/manga/details/${data.slug}`} className={cx('name')}>
+                    <Link to={`/manga/details/${data.slug}`} title={data.name} className={cx('name')}>
                         {data.name}
                     </Link>
                     <p className={cx('description')}>{data.review}</p>
@@ -33,8 +30,15 @@ function SliderItem({ data, showEffect = false }) {
                         ))}
                     </div>
                     <div className={cx('contact')}>
-                        <Button to={`/manga/read/${handleSlug(data.slug)}/chap-1`} primary children="Đọc ngay" />
-                        <Button to={`/manga/details/${data.slug}`} children="Chi tiết" />
+                        <Button
+                            to={`/manga/read/${handleUrl.slug(data.slug)}/chap-${handleUrl.chapter(
+                                data.oldChapter.slice(8),
+                            )}`}
+                            primary
+                            children="Đọc ngay"
+                            className={cx('btn')}
+                        />
+                        <Button to={`/manga/details/${data.slug}`} children="Chi tiết" className={cx('btn')} />
                     </div>
                 </div>
                 <div className={cx('thumbnail', { 'show-effect': showEffect })}>

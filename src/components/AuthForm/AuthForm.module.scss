@@ -1,67 +1,16 @@
+@use '/src/components/GlobalStyles/GlobalStyles.module.scss' as styles;
+
 // Auth Form
-.overlay {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--overlay-color);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease-in-out;
-    z-index: 1000;
-
-    &.show {
-        opacity: 1;
-        visibility: visible;
-
-        .wrapper {
-            transform: translateY(0);
-        }
-    }
-
-    .wrapper {
-        width: 500px;
-        border-radius: 20px;
-        background-color: var(--secondary-bg-color);
-        transform: translateY(-60px);
-        transition: all 0.3s ease-in-out;
-    }
-}
-
-.header {
-    position: relative;
-    padding: 30px 30px 0;
-    color: var(--secondary-text-color);
-
-    .close-btn {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.8rem;
-        border-radius: 0 20px 0 20px;
-        background-color: var(--tertiary-bg-color);
-        cursor: pointer;
-    }
-
-    .title {
-        text-align: center;
-        font-size: 2rem;
-        font-weight: 600;
-    }
-}
-
 .body {
-    padding: 20px 60px;
+    padding: 0 60px 20px;
+
+    @include styles.mobile {
+        padding: 0 20px 20px;
+    }
 }
 
 .footer {
-    padding: 12px 12px 30px;
+    padding: 12px 12px 0;
     font-size: 1.6rem;
     text-align: center;
     color: var(--secondary-text-color);
@@ -160,7 +109,7 @@
 }
 
 .form-submit {
-    margin: 24px 0 8px;
+    margin-top: 24px;
 
     .submit-btn {
         padding: 12px;

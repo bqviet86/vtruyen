@@ -13,14 +13,19 @@ function Button({
     secondary = false,
     tertiary = false,
     quaternary = false,
+    quinary = false,
     widthFull = false,
+    rounded = false,
+    roundSpace = 0,
     size = 'md',
+    color = '',
     bg = '',
     disabled = false,
     IconLeft = '',
     IconRight = '',
     className,
     children,
+    style = {},
     ...passProps
 }) {
     let Comp = 'button'
@@ -50,6 +55,8 @@ function Button({
         secondary,
         tertiary,
         quaternary,
+        quinary,
+        rounded,
         disabled,
         small: size === 'sm',
         small2: size === 'sm2',
@@ -61,8 +68,13 @@ function Button({
         iconRight: IconRight,
     })
 
+    const roundedStyles = rounded ? { marginRight: roundSpace } : {}
+
     const styles = {
+        ...style,
+        ...roundedStyles,
         width: widthFull ? '100%' : 'auto',
+        color,
         backgroundColor: bg,
     }
 

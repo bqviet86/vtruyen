@@ -1,0 +1,172 @@
+@use '/src/components/GlobalStyles/GlobalStyles.module.scss' as styles;
+
+.wrapper {
+    position: relative;
+    height: 100%;
+    border-top: 5px solid var(--purple-primary-color);
+}
+
+.header {
+    padding: 10px;
+    background-color: var(--tertiary-bg-color);
+
+    .search-wrap {
+        position: relative;
+
+        @mixin styling($search-width) {
+            input {
+                width: $search-width;
+            }
+
+            .clear-btn {
+                right: calc(100% - $search-width + 12px);
+            }
+        }
+
+        @include styling($search-width: 240px);
+
+        @include styles.tablet-mobile {
+            @include styling($search-width: 100%);
+        }
+
+        .search-btn {
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.6rem;
+            color: var(--secondary-text-color);
+            background-color: transparent;
+            cursor: text;
+        }
+
+        input {
+            padding: 8px 20px 8px 36px;
+            max-width: 100%;
+            height: 32px;
+            font-size: 1.3rem;
+            color: var(--secondary-text-color);
+            background-color: var(--quinary-bg-color);
+        }
+
+        .clear-btn {
+            position: absolute;
+            top: 50%;
+            padding: 2px;
+            display: flex;
+            font-size: 1.4rem;
+            border-radius: 4px;
+            background-color: rgba(0, 0, 0, 0.1);
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    }
+}
+
+.chapter-list-wrap {
+    position: absolute;
+    inset: 52px 0 0;
+
+    .chapter-list {
+        height: 100%;
+        overflow: auto;
+
+        .chapter-item {
+            margin-bottom: 1px;
+
+            .chapter-link {
+                position: relative;
+                padding: 15px 10px 15px 15px;
+                display: flex;
+                align-items: center;
+                font-size: 1.3rem;
+                font-weight: 500;
+                color: var(--secondary-text-color);
+                background-color: var(--secondary-bg-color);
+
+                &.active {
+                    color: #fff;
+                    background-color: var(--purple-primary-color);
+                }
+
+                &.highlight {
+                    color: var(--purple-primary-color);
+                    background-color: #fff;
+                    box-shadow: 0 0 0 2px var(--purple-primary-color) inset;
+
+                    .read-btn {
+                        color: #fff !important;
+                        background-color: var(--purple-primary-color);
+                    }
+                }
+
+                &:hover {
+                    color: var(--tertiary-text-color);
+
+                    &::before {
+                        display: block;
+                    }
+
+                    .read-btn {
+                        color: #fff !important;
+                        background-color: var(--purple-primary-color);
+                    }
+                }
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    inset: 0 auto 0 0;
+                    width: 3px;
+                    display: none;
+                    background-color: var(--purple-primary-color);
+                }
+
+                .icon {
+                    margin-right: 6px;
+                    display: flex;
+                    font-size: 1.4rem;
+                }
+
+                .title {
+                    flex: 1;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+
+                .read-btn {
+                    margin-left: 24px !important;
+                }
+            }
+        }
+    }
+}
+
+.wrapper.secondary {
+    border-radius: 8px;
+    overflow: hidden;
+
+    .clear-btn {
+        right: 12px;
+    }
+
+    .chapter-item {
+        &:last-child {
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+
+        .chapter-link {
+            padding: 9px 15px;
+            font-size: 1.2rem;
+            font-weight: 400;
+
+            .icon {
+                font-size: 1.2rem;
+            }
+        }
+    }
+}

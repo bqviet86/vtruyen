@@ -1,18 +1,69 @@
+@use '/src/components/GlobalStyles/GlobalStyles.module.scss' as styles;
+
 .wrapper {
+    margin: 0 auto;
+    padding: 0 20px;
+    width: var(--width-layout);
+    max-width: 100%;
     height: 80px;
     display: flex;
     justify-content: center;
+    align-items: center;
 
-    &.secondary {
-        background-color: #7b36ce;
+    &.higher {
+        height: 100px;
+    }
+
+    @include styles.pc {
+        height: 70px !important;
+    }
+
+    @include styles.desktop-tablet {
+        padding: 0 15px;
+    }
+
+    .menu-btn {
+        margin: 0 16px 0 -8px;
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        font-size: 3.6rem;
+        cursor: pointer;
+
+        @include styles.pc {
+            display: flex;
+        }
+
+        @include styles.mobile {
+            margin: 0 10px 0 -8px;
+        }
+    }
+
+    .logo {
+        flex-shrink: 0;
+        width: 160px;
+        display: flex;
+
+        @include styles.mobile {
+            width: 128px;
+        }
+
+        img {
+            width: 100%;
+        }
     }
 
     .content {
-        padding: 0 20px;
-        width: 1400px;
-        max-width: 100%;
+        flex: 1;
         display: flex;
         justify-content: space-between;
+
+        @include styles.desktop {
+            justify-content: flex-end;
+        }
     }
 }
 
@@ -20,12 +71,18 @@
     display: flex;
     align-items: center;
 
-    .logo {
-        width: 140px;
+    &:nth-child(1) {
+        @include styles.desktop {
+            display: none;
+        }
     }
 
     .item-wrap {
         margin-left: 24px;
+
+        @include styles.pc {
+            margin-left: 20px;
+        }
 
         .item {
             padding: 0 10px;
@@ -40,6 +97,14 @@
                 color: var(--yellow-primary-color);
             }
 
+            @include styles.pc {
+                font-size: 1.4rem;
+            }
+
+            & a {
+                color: inherit;
+            }
+
             & svg {
                 margin-left: 6px;
             }
@@ -48,6 +113,14 @@
 
     .user-wrap {
         margin-left: 30px;
+
+        @include styles.pc-desktop {
+            margin-left: 20px;
+        }
+
+        @include styles.mobile {
+            margin-left: 10px;
+        }
 
         .user {
             width: 40px;
@@ -67,8 +140,9 @@
             .avatar {
                 width: 100%;
                 height: 100%;
+                object-fit: cover;
+                border: 1.6px solid #fff;
                 border-radius: inherit;
-                border: 2px solid #fff;
             }
         }
     }
@@ -79,7 +153,7 @@
     padding: 8px;
     min-width: 150px;
     border-radius: 12px;
-    background-color: var(--secondary-bg-color);
+    background-color: var(--tertiary-bg-color);
 
     &::before {
         content: '';

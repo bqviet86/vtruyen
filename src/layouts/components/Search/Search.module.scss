@@ -1,6 +1,16 @@
+@use '/src/components/GlobalStyles/GlobalStyles.module.scss' as styles;
+
 .wrapper {
     position: relative;
-    width: 300px;
+    width: 320px;
+
+    @include styles.pc {
+        width: 260px;
+    }
+
+    @include styles.pc-desktop {
+        width: 40px;
+    }
 
     .search-input {
         padding: 0 36px 0 12px;
@@ -16,6 +26,11 @@
         &:hover {
             cursor: text;
         }
+
+        @include styles.pc-desktop {
+            opacity: 0;
+            visibility: hidden;
+        }
     }
 
     .search-btn {
@@ -30,6 +45,14 @@
         border-bottom-right-radius: 8px;
         background-color: transparent;
         cursor: pointer;
+
+        @include styles.pc-desktop {
+            margin: -2px 0;
+            width: 40px;
+            color: #fff;
+            border-radius: 50%;
+            background-color: var(--secondary-bg-color);
+        }
     }
 }
 
@@ -58,6 +81,7 @@
 .search-wrap {
     position: relative;
     width: 600px;
+    max-width: calc(100% - 16px);
     height: 80vh;
 
     .search-form {
@@ -72,12 +96,16 @@
         transform-origin: bottom;
         transition: transform 0.3s ease-in-out;
 
+        @include styles.mobile {
+            padding: 30px 20px;
+        }
+
         .header {
             margin-bottom: 12px;
             color: var(--secondary-text-color);
 
             .title {
-                font-size: 2.8rem;
+                font-size: 2.4rem;
                 font-weight: 600;
             }
 
@@ -97,19 +125,41 @@
             }
         }
 
-        .seek-input {
-            margin-bottom: 12px;
-            padding: 12px 20px;
-            width: 100%;
-            font-size: 1.4rem;
-            font-weight: 300;
-            border-radius: 12px;
-            color: var(--secondary-text-color);
-            background-color: var(--tertiary-bg-color);
+        .seek-input-wrap {
+            position: relative;
+
+            .seek-input {
+                margin-bottom: 12px;
+                padding: 12px 48px 12px 20px;
+                width: 100%;
+                font-size: 1.4rem;
+                font-weight: 300;
+                border-radius: 12px;
+                color: var(--secondary-text-color);
+                background-color: var(--tertiary-bg-color);
+            }
+
+            .clear-btn {
+                position: absolute;
+                top: 50%;
+                right: 12px;
+                padding: 4px;
+                display: flex;
+                border-radius: 50%;
+                background-color: rgba(0, 0, 0, 0.1);
+                transform: translateY(calc(-50% - 6px));
+                cursor: pointer;
+            }
         }
 
         .search-result {
             overflow-y: auto;
+
+            @include styles.mobile {
+                &::-webkit-scrollbar {
+                    width: 0;
+                }
+            }
 
             .item {
                 margin-right: 6px;
@@ -120,6 +170,10 @@
 
                 & + .item {
                     margin-top: 6px;
+                }
+
+                @include styles.mobile {
+                    margin-right: 0;
                 }
 
                 .thumbnail {
@@ -161,8 +215,12 @@
                         flex-wrap: wrap;
                     }
 
-                    a:hover {
-                        color: var(--tertiary-text-color);
+                    a {
+                        width: fit-content;
+
+                        &:hover {
+                            color: var(--tertiary-text-color);
+                        }
                     }
                 }
             }

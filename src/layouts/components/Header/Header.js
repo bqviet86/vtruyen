@@ -6,10 +6,12 @@ import { useSelector } from 'react-redux'
 
 import NavbarItem from './NavbarItem'
 import Search from '../Search'
+import Sidebar from '../Sidebar'
 import Menu from '~/components/Menu'
 import AuthForm from '~/components/AuthForm'
 import { useLogout } from '~/hooks'
 import { userSelector } from '~/redux/selectors'
+import { handleScrollbar } from '~/utils'
 import images from '~/assets/images'
 import styles from './Header.module.scss'
 
@@ -17,25 +19,34 @@ const cx = classNames.bind(styles)
 
 const navItems = [
     {
-        title: 'Thể loại',
-        menu: ['Action', 'Adventure', 'Comedy', 'Horror'],
+        title: 'Hoàn thành',
+        to: '/completed',
     },
     {
-        title: 'Truyện tranh',
-        menu: ['Manga', 'Manhua', 'Manhwa', 'Doujinshi'],
+        title: 'Thể loại',
+        menu: [
+            { title: 'Manga', to: '/genre/manga-112' },
+            { title: 'One shot', to: '/genre/one-shot' },
+            { title: 'Doujinshi', to: '/genre/doujinshi' },
+            { title: 'Live action', to: 'genre/live-action' },
+            { title: 'Manhwa', to: '/genre/manhwa-11400' },
+            { title: 'Manhua', to: '/genre/manhua' },
+            { title: 'Comic', to: '/genre/comic' },
+        ],
+    },
+    {
+        title: 'Danh sách A-Z',
+        to: '/az-list',
     },
     {
         title: 'Mới cập nhật',
-        menu: null,
-    },
-    {
-        title: 'Bảng xếp hạng',
-        menu: null,
+        to: '/new-update',
     },
 ]
 
-function Header({ primary, secondary }) {
+function Header({ higher = false }) {
     const [showAuthForm, setShowAuthForm] = useState(false)
+    const [showSidebar, setShowSidebar] = useState(false)
     const currentUser = useSelector(userSelector)
     const { logout } = useLogout()
 
@@ -60,20 +71,28 @@ function Header({ primary, secondary }) {
     ]
 
     const handleOpenAuthForm = () => {
+        handleScrollbar.hideScrollbar()
         setShowAuthForm(true)
+    }
+
+    const handleOpenSidebar = () => {
+        handleScrollbar.hideScrollbar()
+        setShowSidebar(true)
     }
 
     return (
         <>
-            <header className={cx('wrapper', { secondary: !primary && secondary })}>
+            <header className={cx('wrapper', { higher })}>
+                <div className={cx('menu-btn')} onClick={handleOpenSidebar}>
+                    <Icon icon="mi:menu" />
+                </div>
+                <Link to="/" className={cx('logo')}>
+                    <img src={images.logo_1} alt="logo" />
+                </Link>
                 <div className={cx('content')}>
                     <nav className={cx('navbar')}>
-                        <Link to="/" style={{ display: 'flex' }}>
-                            {(primary && <img src={images.logo_1} className={cx('logo')} alt="logo" />) ||
-                                (secondary && <img src={images.logo_2} className={cx('logo')} alt="logo" />)}
-                        </Link>
                         {navItems.map((navItem, index) => (
-                            <NavbarItem key={index} title={navItem.title} menu={navItem.menu} />
+                            <NavbarItem key={index} {...navItem} />
                         ))}
                     </nav>
                     <nav className={cx('navbar')}>
@@ -94,6 +113,7 @@ function Header({ primary, secondary }) {
                     </nav>
                 </div>
             </header>
+            <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
             <AuthForm showAuthForm={showAuthForm} setShowAuthForm={setShowAuthForm} />
         </>
     )

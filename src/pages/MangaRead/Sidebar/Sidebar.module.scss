@@ -1,0 +1,126 @@
+.wrapper {
+    position: relative;
+    width: 260px;
+    background-color: #222222;
+    transition: all 0.2s ease 0s;
+
+    &.hide {
+        width: 0;
+    }
+
+    .body {
+        padding: 15px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .header {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+
+            .logo {
+                margin: 0 15px;
+                width: 120px;
+                display: flex;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+        }
+
+        .toggle-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            transition: all 0.2s ease 0s;
+
+            &.showSidebar-btn {
+                right: -55px;
+            }
+        }
+
+        .name {
+            position: relative;
+            margin-bottom: 16px;
+            padding-top: 25px;
+            font-size: 1.6rem;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+
+            &::before {
+                content: '';
+                position: absolute;
+                inset: 0 0 auto;
+                height: 1px;
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        .chapter {
+            margin-bottom: 16px;
+            font-size: 1.4rem;
+            line-height: 1.4;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .chapter-btn-wrap {
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+
+            .chapter-btn {
+                width: 92px;
+                height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 1.8rem;
+                border-radius: 4px;
+                background-color: #444444;
+
+                & + .chapter-btn {
+                    margin-left: 8px;
+                }
+
+                &.disabled {
+                    opacity: 0.6;
+                    pointer-events: none;
+                }
+            }
+        }
+
+        .chapter-list {
+            flex: 1;
+            margin-bottom: 16px;
+        }
+
+        .setting-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.6rem;
+            white-space: nowrap;
+            overflow: hidden;
+            cursor: pointer;
+
+            &:hover {
+                color: var(--tertiary-text-color);
+            }
+
+            svg {
+                margin-right: 8px;
+            }
+        }
+    }
+}

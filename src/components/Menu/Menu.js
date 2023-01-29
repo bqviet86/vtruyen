@@ -6,23 +6,26 @@ import styles from './Menu.module.scss'
 
 const cx = classNames.bind(styles)
 
-function Menu({ children, data }) {
+function Menu({ children, data, className }) {
     return (
-        <HeadlessTippy
-            interactive
-            hideOnClick
-            trigger="click"
-            placement="bottom-end"
-            render={(attrs) => (
-                <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
-                    {data.map((item, index) => (
-                        <MenuItem key={index} {...item} />
-                    ))}
-                </div>
-            )}
-        >
-            {children}
-        </HeadlessTippy>
+        <div>
+            <HeadlessTippy
+                interactive
+                hideOnClick
+                trigger="click"
+                placement="bottom-end"
+                offset={[0, 3]}
+                render={(attrs) => (
+                    <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
+                        {data.map((item, index) => (
+                            <MenuItem key={index} {...item} className={className} />
+                        ))}
+                    </div>
+                )}
+            >
+                {children}
+            </HeadlessTippy>
+        </div>
     )
 }
 

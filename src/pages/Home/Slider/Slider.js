@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Autoplay, EffectFade } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
+import Button from '~/components/Button'
 import SliderItem from './SliderItem'
 import { mangaService } from '~/services'
 import styles from './Slider.module.scss'
@@ -21,9 +22,9 @@ function Slider() {
             const res = await mangaService.getSliderManga()
 
             if (res.success) {
-                setMangas(res.data.comics)
+                setMangas(res.data)
                 setShowThumbnailEffect(() => {
-                    const newShowThumbnailEffect = Array(res.data.comics.length).fill(false)
+                    const newShowThumbnailEffect = Array(res.data.length).fill(false)
 
                     newShowThumbnailEffect[newShowThumbnailEffect.length - 1] = true
 
@@ -74,12 +75,13 @@ function Slider() {
                 ))}
             </Swiper>
             <div className={cx('navigation')}>
-                <button className={cx('btn', 'btn-prev')} onClick={handlePrevSlider}>
-                    <Icon icon="ph:caret-left-bold" />
-                </button>
-                <button className={cx('btn', 'btn-next')} onClick={handleNextSlider}>
-                    <Icon icon="ph:caret-right-bold" />
-                </button>
+                <Button
+                    rounded
+                    roundSpace={10}
+                    children=<Icon icon="ph:caret-left-bold" />
+                    onClick={handlePrevSlider}
+                />
+                <Button rounded children=<Icon icon="ph:caret-right-bold" /> onClick={handleNextSlider} />
             </div>
         </div>
     )

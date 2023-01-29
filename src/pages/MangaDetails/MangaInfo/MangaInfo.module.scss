@@ -1,0 +1,183 @@
+@use '/src/components/GlobalStyles/GlobalStyles.module.scss' as styles;
+
+.wrapper {
+    margin: 0 auto;
+    padding: 60px 20px;
+    width: var(--width-layout);
+    max-width: 100%;
+    display: flex;
+    align-items: flex-start;
+
+    @include styles.desktop-tablet {
+        padding: 50px 15px 60px;
+        flex-direction: column;
+    }
+}
+
+.poster {
+    margin-right: 30px;
+    width: 260px;
+    display: flex;
+    aspect-ratio: 2/3;
+    border: 4px solid #fff;
+    border-radius: 16px;
+    background-color: #fff;
+
+    @include styles.pc {
+        width: 240px;
+    }
+
+    @include styles.pc-desktop {
+        width: 220px;
+    }
+
+    @include styles.desktop {
+        width: 200px;
+    }
+
+    @include styles.desktop-tablet {
+        margin: 0 auto 16px;
+        width: 140px;
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+}
+
+.details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    @include styles.desktop-tablet {
+        width: 100%;
+    }
+
+    .name {
+        margin-bottom: 8px;
+        font-size: 2.8rem;
+        line-height: 1.3;
+
+        @include styles.desktop-tablet {
+            margin-bottom: 10px;
+            font-size: 2.4rem;
+            text-align: center;
+            order: 0;
+        }
+    }
+
+    .other-name {
+        margin-bottom: 16px;
+        font-size: 1.6rem;
+        line-height: 1.4;
+        color: var(--quinary-text-color);
+
+        @include styles.desktop-tablet {
+            margin-bottom: 20px;
+            text-align: center;
+            order: 1;
+        }
+    }
+
+    .desc {
+        margin-bottom: 16px;
+
+        @include styles.desktop-tablet {
+            margin-bottom: 14px;
+            order: 4;
+        }
+
+        .details-line {
+            font-size: 1.4rem;
+            font-weight: 300;
+
+            & + .details-line {
+                margin-top: 6px;
+
+                @include styles.desktop-tablet {
+                    margin-top: 4px;
+                }
+            }
+
+            @include styles.tablet {
+                font-size: 1.3rem;
+            }
+
+            .title {
+                margin-right: 6px;
+                font-weight: 500;
+            }
+        }
+    }
+
+    .genres {
+        margin-bottom: 16px;
+        display: flex;
+        flex-wrap: wrap;
+
+        @include styles.desktop-tablet {
+            margin-bottom: 12px;
+            order: 3;
+        }
+
+        a:hover {
+            color: var(--tertiary-text-color);
+        }
+    }
+
+    .btn-wrap {
+        margin-bottom: 16px;
+        display: flex;
+        flex-wrap: wrap;
+
+        @include styles.desktop-tablet {
+            margin-bottom: 32px;
+            justify-content: center;
+            order: 2;
+
+            a {
+                margin: 6px;
+            }
+        }
+
+        @include styles.tablet {
+            margin-bottom: 16px;
+        }
+    }
+
+    .content {
+        margin-bottom: 4px;
+        font-size: 1.4rem;
+        font-weight: 300;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+
+        @include styles.desktop-tablet {
+            order: 5;
+        }
+
+        @include styles.tablet {
+            font-size: 1.3rem;
+        }
+    }
+
+    .content-more-btn {
+        padding: 2px 4px;
+        width: fit-content;
+        font-size: 1.2rem;
+        font-weight: 500;
+        line-height: 1;
+        cursor: pointer;
+
+        @include styles.desktop-tablet {
+            order: 6;
+        }
+    }
+}

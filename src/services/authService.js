@@ -1,4 +1,4 @@
-import * as httpRequest from '~/utils/httpRequest'
+import { httpRequest } from '~/utils'
 
 const authService = {
     signup: async (data) => {

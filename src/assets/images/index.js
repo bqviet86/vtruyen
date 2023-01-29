@@ -5,6 +5,7 @@ const images = {
     logo_2: require('~/assets/images/logo-2.png'),
     checkbox: require('~/assets/images/checkbox.png'),
     avatars: avatarImages,
+    share: require('~/assets/images/share.gif'),
     noImage: require('~/assets/images/no-image.png'),
 }
 

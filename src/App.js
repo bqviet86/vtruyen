@@ -1,12 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
+import Wrapper from './Wrapper'
 import routes from '~/routes'
 
 function App() {
     return (
-        <Router>
-            <div className="App">
-                <Routes>
+        <div className="App">
+            <Router>
+                <Wrapper>
                     {routes.map((route, index) => {
                         const Layout = route.layout
                         const Page = route.component
@@ -23,9 +24,9 @@ function App() {
                             />
                         )
                     })}
-                </Routes>
-            </div>
-        </Router>
+                </Wrapper>
+            </Router>
+        </div>
     )
 }
 

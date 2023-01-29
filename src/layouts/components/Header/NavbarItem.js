@@ -1,13 +1,14 @@
 import classNames from 'classnames/bind'
-import HeadlessTippy from '@tippyjs/react/headless'
 import { Icon } from '@iconify/react'
+import HeadlessTippy from '@tippyjs/react/headless'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import styles from './Header.module.scss'
 
 const cx = classNames.bind(styles)
 
-function NavbarItem({ title, menu }) {
+function NavbarItem({ title = '', menu, to = '/' }) {
     const [hover, setHover] = useState(false)
 
     return (
@@ -27,7 +28,7 @@ function NavbarItem({ title, menu }) {
                         >
                             {menu.map((item, index) => (
                                 <li key={index}>
-                                    <a href="/">{item}</a>
+                                    <Link to={item.to}>{item.title}</Link>
                                 </li>
                             ))}
                         </ul>
@@ -40,7 +41,9 @@ function NavbarItem({ title, menu }) {
                 </HeadlessTippy>
             ) : (
                 <div className={cx('item')}>
-                    <span>{title}</span>
+                    <Link to={to}>
+                        <span>{title}</span>
+                    </Link>
                 </div>
             )}
         </div>

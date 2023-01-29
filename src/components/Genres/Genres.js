@@ -9,16 +9,25 @@ import styles from './Genres.module.scss'
 
 const cx = classNames.bind(styles)
 
-function Genres() {
-    const [displayNumber, setDisplayNumber] = useState(25)
+const beautyBtn = [
+    { slug: '/moi-cap-nhat', label: 'Mới cập nhật', icon: '⚡', bg: 'green' },
+    { slug: '/truyen-moi', label: 'Truyện mới', icon: '✌', bg: 'yellow' },
+    { slug: '/random-truyen', label: 'Random truyện', icon: '🔥', bg: 'purple' },
+    { slug: '/hoan-thanh', label: 'Hoàn thành', icon: '✅', bg: 'blue' },
+]
+
+const btns = [...beautyBtn, ...genres]
+
+function Genres({ less = false }) {
+    const [displayNumber, setDisplayNumber] = useState(less ? 25 : btns.length)
 
     const handleClickMore = () => {
-        setDisplayNumber((prev) => prev * 2)
+        setDisplayNumber(btns.length)
     }
 
     return (
         <div className={cx('wrapper')}>
-            {genres.map((genre, index) => {
+            {btns.map((genre, index) => {
                 if (index < displayNumber) {
                     return (
                         <Button
@@ -29,6 +38,8 @@ function Genres() {
                             size="sm"
                             IconLeft={genre.icon && <i>{genre.icon}</i>}
                             bg={genre.bg ? randomColor({ hue: genre.bg, luminosity: 'light' }) : ''}
+                            className={cx('btn')}
+                            style={displayNumber === btns.length ? { display: 'flex' } : {}}
                         />
                     )
                 } else {

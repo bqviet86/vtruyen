@@ -1,12 +1,13 @@
 import classNames from 'classnames/bind'
 import { Icon } from '@iconify/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import Button from '~/components/Button'
 import Loading from '~/components/Loading'
-import { mangaService } from '~/services'
 import { useDebounce } from '~/hooks'
+import { mangaService } from '~/services'
+import { handleUrl, handleScrollbar } from '~/utils'
 import styles from './Search.module.scss'
 
 const cx = classNames.bind(styles)
@@ -15,13 +16,13 @@ function SearchForm({ showSearchForm, setShowSearchForm }) {
     const [searchValue, setSearchValue] = useState('')
     const [searchResult, setSearchResult] = useState([])
     const [loading, setLoading] = useState(false)
+    const seekInputRef = useRef(null)
 
-    const debouncedValue = useDebounce(searchValue, 3000)
+    const debouncedValue = useDebounce(searchValue, 700)
 
     useEffect(() => {
         if (!debouncedValue.trim()) {
             setSearchResult([])
-
             return
         }
 
@@ -31,7 +32,7 @@ function SearchForm({ showSearchForm, setShowSearchForm }) {
             const res = await mangaService.searchManga(debouncedValue)
 
             if (res.success) {
-                setSearchResult(res.data.comics)
+                setSearchResult(res.data)
             }
 
             setLoading(false)
@@ -40,15 +41,13 @@ function SearchForm({ showSearchForm, setShowSearchForm }) {
         fetchData()
     }, [debouncedValue])
 
-    const handleSlug = (slug) => {
-        return slug.slice(0, slug.lastIndexOf('-'))
-    }
-
-    const handleChapter = (chapter) => {
-        return chapter.slice(8)
+    const handleClearSeekInput = () => {
+        setSearchValue('')
+        seekInputRef.current.focus()
     }
 
     const handleCloseForm = () => {
+        handleScrollbar.appearScrollbar()
         setShowSearchForm(false)
     }
 
@@ -61,19 +60,27 @@ function SearchForm({ showSearchForm, setShowSearchForm }) {
             <div className={cx('search-wrap')}>
                 <div className={cx('search-form')} onClick={handleStopPropagation}>
                     <div className={cx('header')}>
-                        <h5 className={cx('title')}>Tìm truyện</h5>
                         <div className={cx('close-btn')} onClick={handleCloseForm}>
                             <Icon icon="ph:x-bold" />
                         </div>
+                        <h5 className={cx('title')}>Tìm truyện</h5>
                     </div>
 
-                    <input
-                        className={cx('seek-input')}
-                        placeholder="Nhập tên truyện bạn muốn tìm"
-                        spellCheck={false}
-                        value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
-                    />
+                    <div className={cx('seek-input-wrap')}>
+                        <input
+                            ref={seekInputRef}
+                            className={cx('seek-input')}
+                            placeholder="Nhập tên truyện bạn muốn tìm"
+                            spellCheck={false}
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                        />
+                        {searchValue && (
+                            <div className={cx('clear-btn')} onClick={handleClearSeekInput}>
+                                <Icon icon="ph:x-bold" />
+                            </div>
+                        )}
+                    </div>
 
                     {loading && (
                         <div className={cx('loading-wrap')}>
@@ -86,21 +93,27 @@ function SearchForm({ showSearchForm, setShowSearchForm }) {
                             {searchResult.map((manga) => (
                                 <div key={manga._id} className={cx('item')}>
                                     <div className={cx('thumbnail')}>
-                                        <Link to={`/manga/details/${manga.slug}`}>
-                                            <img src={manga.thumbnail} alt="thumbnail" />
+                                        <Link to={`/manga/details/${manga.slug}`} onClick={handleCloseForm}>
+                                            <img src={manga.thumbnail} alt={manga.name} />
                                         </Link>
                                     </div>
                                     <div className={cx('info')}>
-                                        <Link to={`/manga/details/${manga.slug}`} className={cx('name')}>
+                                        <Link
+                                            to={`/manga/details/${manga.slug}`}
+                                            title={manga.name}
+                                            className={cx('name')}
+                                            onClick={handleCloseForm}
+                                        >
                                             {manga.name}
                                         </Link>
                                         <Link
-                                            to={`/manga/read/${handleSlug(manga.slug)}/chap-${handleChapter(
-                                                manga.newChapter,
+                                            to={`/manga/read/${handleUrl.slug(manga.slug)}/chap-${handleUrl.chapter(
+                                                manga.newChapter.slice(8),
                                             )}`}
                                             className={cx('new-chapter')}
+                                            onClick={handleCloseForm}
                                         >
-                                            {manga.newChapter}
+                                            {handleUrl.chapter(manga.newChapter)}
                                         </Link>
                                         <div className={cx('genres')}>
                                             {manga.genres.map((genre) => (
@@ -111,6 +124,7 @@ function SearchForm({ showSearchForm, setShowSearchForm }) {
                                                     children={genre.label}
                                                     size="sm2"
                                                     bg="#0000001a"
+                                                    onClick={handleCloseForm}
                                                 />
                                             ))}
                                         </div>
@@ -122,7 +136,6 @@ function SearchForm({ showSearchForm, setShowSearchForm }) {
                                 quaternary
                                 children="Xem tất cả kết quả"
                                 size="lg2"
-                                widthFull
                                 IconRight=<Icon icon="ph:caret-right-bold" />
                                 style={{ margin: '6px 6px 0 0' }}
                             />

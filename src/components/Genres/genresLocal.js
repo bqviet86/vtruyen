@@ -1,8 +1,4 @@
 const genres = [
-    { slug: '/moi-cap-nhat', label: 'Mới cập nhật', icon: '⚡', bg: 'green' },
-    { slug: '/truyen-moi', label: 'Truyện mới', icon: '✌', bg: 'yellow' },
-    { slug: '/random-truyen', label: 'Random truyện', icon: '🔥', bg: 'purple' },
-    { slug: '/hoan-thanh', label: 'Hoàn thành', icon: '✅', bg: 'blue' },
     { slug: '/genre/action-95', label: 'Action' },
     { slug: '/genre/truong-thanh', label: 'Adult' },
     { slug: '/genre/adventure', label: 'Adventure' },

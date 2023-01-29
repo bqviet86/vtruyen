@@ -1,7 +1,13 @@
+@use '/src/components/GlobalStyles/GlobalStyles.module.scss' as styles;
+
 .wrapper {
     position: relative;
     margin: 0 20px;
     overflow: hidden;
+
+    @include styles.pc {
+        margin: 0;
+    }
 
     .navigation {
         position: absolute;
@@ -10,22 +16,8 @@
         display: flex;
         z-index: 1;
 
-        .btn {
-            margin: 0 5px;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.6rem;
-            border-radius: 50%;
-            color: #111;
-            background-color: #fff;
-            cursor: pointer;
-
-            &:hover {
-                background-color: var(--yellow-primary-color);
-            }
+        @include styles.desktop {
+            display: none;
         }
     }
 }
@@ -38,6 +30,11 @@
         position: relative;
         width: 100%;
         aspect-ratio: 3/1;
+
+        @include styles.tablet-mobile {
+            height: 200px;
+            aspect-ratio: unset;
+        }
 
         .slider-img {
             position: absolute;
@@ -63,19 +60,50 @@
             width: 600px;
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
             color: #fff;
             transform: translateY(-50%);
+
+            @include styles.pc-desktop {
+                padding: 0;
+            }
+
+            @include styles.desktop {
+                width: 460px;
+            }
+
+            @include styles.tablet {
+                width: calc(100% - 340px);
+            }
+
+            @include styles.tablet-mobile {
+                width: calc(100% - 240px);
+            }
+
+            @include styles.mobile {
+                left: 15px;
+                width: calc(100% - 180px);
+            }
 
             .new-chapter {
                 margin-bottom: 5px;
                 font-size: 1.8rem;
                 font-weight: 600;
+
+                @include styles.pc-desktop {
+                    font-size: 1.6rem;
+                }
+
+                @include styles.desktop {
+                    display: none;
+                }
             }
 
             .name {
                 margin-bottom: 15px;
                 font-size: 3.2rem;
                 font-weight: 600;
+                line-height: 1.3;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 2;
@@ -83,6 +111,20 @@
 
                 &:hover {
                     color: var(--tertiary-text-color);
+                }
+
+                @include styles.pc-desktop {
+                    font-size: 3rem;
+                }
+
+                @include styles.desktop-tablet {
+                    margin-bottom: 20px;
+                    font-size: 2rem;
+                }
+
+                @include styles.tablet-mobile {
+                    margin-bottom: 12px;
+                    font-size: 1.8rem;
                 }
             }
 
@@ -93,12 +135,25 @@
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 3;
                 overflow: hidden;
+
+                @include styles.desktop {
+                    margin-bottom: 30px;
+                    -webkit-line-clamp: 4;
+                }
+
+                @include styles.tablet {
+                    display: none;
+                }
             }
 
             .genres {
                 margin-bottom: 30px;
                 display: flex;
                 flex-wrap: wrap;
+
+                @include styles.desktop {
+                    display: none;
+                }
 
                 span {
                     margin: 0 8px 6px 0;
@@ -110,10 +165,24 @@
             }
 
             .contact {
+                margin-top: -5px;
                 display: flex;
+                flex-wrap: wrap;
 
                 .btn {
-                    margin-right: 12px;
+                    margin: 5px 8px 0 0;
+
+                    & + .btn {
+                        margin-right: 0;
+                    }
+
+                    @include styles.tablet-mobile {
+                        margin-right: 8px;
+                        padding: 0 10px;
+                        min-width: 83px;
+                        height: 30px;
+                        font-size: 1.2rem;
+                    }
                 }
             }
         }
@@ -124,6 +193,7 @@
             left: 750px;
             padding: 20px;
             width: 400px;
+            aspect-ratio: 20/32;
             background-color: #fff;
             opacity: 0;
             scale: 1.2;
@@ -136,9 +206,40 @@
                 scale: 1;
             }
 
+            @include styles.pc-desktop {
+                left: 625px;
+            }
+
+            @include styles.desktop {
+                left: 580px;
+                width: 300px;
+            }
+
+            @include styles.desktop-tablet {
+                left: auto;
+                right: -30px;
+                padding: 10px;
+            }
+
+            @include styles.tablet-mobile {
+                width: 200px;
+            }
+
+            @include styles.mobile {
+                right: -35px;
+                width: 180px;
+            }
+
+            @include styles.mobile-small {
+                top: 54%;
+                left: 240px;
+                right: auto;
+                width: 160px;
+            }
+
             img {
                 width: 100%;
-                aspect-ratio: 20/32;
+                height: 100%;
                 object-fit: cover;
             }
         }

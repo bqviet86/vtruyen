@@ -27,6 +27,8 @@ const useSignup = () => {
         }
 
         setLoading(false)
+
+        return res.success
     }
 
     return { error, loading, signup }

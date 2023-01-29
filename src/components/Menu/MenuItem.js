@@ -5,7 +5,7 @@ import styles from './Menu.module.scss'
 
 const cx = classNames.bind(styles)
 
-function MenuItem({ title, to, href, onClick = () => {}, iconLeft, iconRight, color, bg_color }) {
+function MenuItem({ title, to, href, onClick = () => {}, iconLeft, iconRight, color, bg_color, className }) {
     let Comp = 'button'
     const props = { onClick }
 
@@ -29,7 +29,7 @@ function MenuItem({ title, to, href, onClick = () => {}, iconLeft, iconRight, co
     }
 
     return (
-        <Comp className={cx('menu-item')} {...props}>
+        <Comp className={cx('menu-item', className)} {...props}>
             {iconLeft && <span className={cx('icon', 'icon-left')}>{iconLeft}</span>}
             <span>{title}</span>
             {iconRight && <span className={cx('icon', 'icon-right')}>{iconRight}</span>}

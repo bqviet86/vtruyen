@@ -31,6 +31,7 @@ function Loading({ type = 'primary', color = '#5f25a6' }) {
                         <span key={item} style={{ backgroundColor: color }}></span>
                     ))}
                 </div>
+                // <div className={cx('quaternary')}></div>
             )}
         </>
     )

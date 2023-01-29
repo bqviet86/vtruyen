@@ -1,5 +1,63 @@
 @import 'normalize.css';
 
+// Variables
+$pc-width: 81.25em; // 1300px
+$pc-desktop-width: 75em; // 1200px
+$desktop-width: 64em; // 1024px
+$desktop-tablet-width: 53.75em; // 860px
+$tablet-width: 47.5em; // 760px
+$tablet-mobile-width: 36.25em; // 580px
+$mobile-width: 30em; // 480px
+$mobile-small-width: 23.75em; // 380px
+
+@mixin pc {
+    @media (max-width: #{$pc-width}) {
+        @content;
+    }
+}
+
+@mixin pc-desktop {
+    @media (max-width: #{$pc-desktop-width}) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (max-width: #{$desktop-width}) {
+        @content;
+    }
+}
+
+@mixin desktop-tablet {
+    @media (max-width: #{$desktop-tablet-width}) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (max-width: #{$tablet-width}) {
+        @content;
+    }
+}
+
+@mixin tablet-mobile {
+    @media (max-width: #{$tablet-mobile-width}) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media (max-width: #{$mobile-width}) {
+        @content;
+    }
+}
+
+@mixin mobile-small {
+    @media (max-width: #{$mobile-small-width}) {
+        @content;
+    }
+}
+
 :root {
     --purple-primary-color: #5f25a6;
     --purple-secondary-color: #7b36ce;
@@ -17,6 +75,7 @@
     --secondary-bg-color: #2f2f2f;
     --tertiary-bg-color: #3f3f3f;
     --quaternary-bg-color: #4f4f4f;
+    --quinary-bg-color: #5f5f5f;
 
     --font-family: 'Poppins', 'IBM Plex Sans', sans-serif;
 
@@ -33,6 +92,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -47,6 +107,7 @@ body {
     color: var(--primary-text-color);
     background-color: var(--primary-bg-color);
     overflow-y: overlay;
+    overflow-x: hidden;
 }
 
 // Scrollbar CSS

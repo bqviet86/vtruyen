@@ -1,21 +1,32 @@
 import classNames from 'classnames/bind'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import Loading from '~/components/Loading'
 import { useLogin } from '~/hooks'
+import { userSelector } from '~/redux/selectors'
 import styles from './AuthForm.module.scss'
 
 const cx = classNames.bind(styles)
 
-function LoginForm() {
+function LoginForm({ setShowAuthForm }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const currentUser = useSelector(userSelector)
     const { error, loading, login } = useLogin()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        await login(email, password)
+        if (!currentUser) {
+            const isSuccessLogin = await login(email, password)
+
+            if (isSuccessLogin) {
+                setEmail('')
+                setPassword('')
+                setShowAuthForm(false)
+            }
+        }
     }
 
     return (

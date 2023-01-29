@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import MangaItem from './MangaItem'
+import Button from '~/components/Button'
+import MangaContentForm from '~/components/MangaContentForm'
 import { mangaService } from '~/services'
 import styles from './MangaList.module.scss'
 import 'swiper/css/bundle'
@@ -14,28 +16,65 @@ function MangaList({
     slider = false,
     trending = false,
     recommended = false,
+    completed = false,
+    random = false,
+    latestUpdate = false,
+    remove = false,
+    content = false,
     heading = 'Manga list',
     itemStyle = 'primary',
     displayItem = 1,
-    space = 0,
+    space = 15,
 }) {
     const [mangas, setMangas] = useState([])
     const [disabledNavigationBtn, setDisabledNavigationBtn] = useState('prev')
+    const [showMangaContentForm, setShowMangaContentForm] = useState(false)
+    const [dataMangaContentForm, setDataMangaContentForm] = useState({})
     const sliderRef = useRef(null)
+    const randomComics = useRef([])
 
-    const service = (trending && mangaService.getTrendingManga) || (recommended && mangaService.getRecommendedManga)
+    const breakpoints = {
+        primary: {
+            1300: { slidesPerView: 8, spaceBetween: 15 },
+            1100: { slidesPerView: 6, spaceBetween: 15 },
+            820: { slidesPerView: 5, spaceBetween: 15 },
+            640: { slidesPerView: 4, spaceBetween: 5 },
+            360: { slidesPerView: 3, spaceBetween: 2 },
+        },
+        secondary: {
+            1100: { slidesPerView: 6, spaceBetween: 20 },
+            820: { slidesPerView: 5, spaceBetween: 15 },
+            640: { slidesPerView: 4, spaceBetween: 5 },
+            360: { slidesPerView: 3, spaceBetween: 2 },
+        },
+        tertiary: {
+            1300: { slidesPerView: 4, spaceBetween: 15 },
+            940: { slidesPerView: 3, spaceBetween: 15 },
+            760: { slidesPerView: 2, spaceBetween: 5 },
+            560: { slidesPerView: 3, spaceBetween: 2 },
+        },
+    }
+
+    const service =
+        (trending && mangaService.getTrendingManga) ||
+        (recommended && mangaService.getRecommendedManga) ||
+        (completed && mangaService.getCompletedManga) ||
+        (random && mangaService.getRandomManga) ||
+        (latestUpdate && mangaService.getLatestUpdateManga)
+
+    const fetchData = async () => {
+        const res = random ? await service(randomComics.current) : await service()
+
+        if (res.success) {
+            randomComics.current = res.data.randomComics
+            setMangas(random ? res.data.comics : res.data)
+        }
+    }
 
     useEffect(() => {
-        const fetchData = async () => {
-            const res = await service()
-
-            if (res.success) {
-                setMangas(res.data.comics)
-            }
-        }
-
         fetchData()
-    }, [service])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const handlePrevSlider = () => {
         if (!sliderRef.current) return
@@ -48,9 +87,14 @@ function MangaList({
     }
 
     const handleSlideChange = (swiper) => {
+        const slidesPerView =
+            swiper.currentBreakpoint === 'max'
+                ? displayItem
+                : swiper.params.breakpoints[swiper.currentBreakpoint].slidesPerView
+
         if (swiper.realIndex === 0) {
             setDisabledNavigationBtn('prev')
-        } else if (swiper.realIndex === swiper.slides.length - displayItem) {
+        } else if (swiper.realIndex === swiper.slides.length - slidesPerView) {
             setDisabledNavigationBtn('next')
         } else {
             setDisabledNavigationBtn('')
@@ -60,42 +104,84 @@ function MangaList({
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header')}>
-                <h2 className={cx('heading')}>{heading}</h2>
+                <div className={cx('header-left')}>
+                    <h2 className={cx('heading')}>{heading}</h2>
+                    {random && (
+                        <Button
+                            secondary
+                            children="Random"
+                            size="md2"
+                            IconRight=<Icon icon="el:random" />
+                            style={{ marginLeft: 20 }}
+                            onClick={fetchData}
+                        />
+                    )}
+                </div>
                 {slider && (
                     <div className={cx('navigation')}>
-                        <button
-                            className={cx('btn', { disabled: disabledNavigationBtn === 'prev' })}
+                        <Button
+                            rounded
+                            roundSpace={6}
+                            color="=var(--secondary-text-color)"
+                            bg="var(--quaternary-bg-color)"
+                            children=<Icon icon="ph:caret-left-bold" />
+                            disabled={disabledNavigationBtn === 'prev'}
                             onClick={handlePrevSlider}
-                        >
-                            <Icon icon="ph:caret-left-bold" />
-                        </button>
-                        <button
-                            className={cx('btn', { disabled: disabledNavigationBtn === 'next' })}
+                        />
+                        <Button
+                            rounded
+                            color="=var(--secondary-text-color)"
+                            bg="var(--quaternary-bg-color)"
+                            children=<Icon icon="ph:caret-right-bold" />
+                            disabled={disabledNavigationBtn === 'next'}
                             onClick={handleNextSlider}
-                        >
-                            <Icon icon="ph:caret-right-bold" />
-                        </button>
+                        />
                     </div>
                 )}
             </div>
 
             {slider ? (
-                <div className={cx('slider-wrap')}>
-                    <Swiper
-                        ref={sliderRef}
-                        slidesPerView={displayItem}
-                        spaceBetween={space}
-                        onSlideChange={handleSlideChange}
-                    >
-                        {mangas.map((manga) => (
-                            <SwiperSlide key={manga._id}>
-                                <MangaItem trending={trending} data={manga} itemStyle={itemStyle} />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </div>
+                <>
+                    <div className={cx('slider-wrap')}>
+                        <Swiper
+                            ref={sliderRef}
+                            slidesPerView={displayItem}
+                            spaceBetween={space}
+                            onSlideChange={handleSlideChange}
+                            breakpoints={breakpoints[itemStyle]}
+                        >
+                            {mangas.map((manga) => (
+                                <SwiperSlide key={manga._id}>
+                                    <MangaItem
+                                        trending={trending}
+                                        data={manga}
+                                        itemStyle={itemStyle}
+                                        remove={remove}
+                                        content={content}
+                                        setShowMangaContentForm={setShowMangaContentForm}
+                                        setDataMangaContentForm={setDataMangaContentForm}
+                                    />
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
+                    {content && (
+                        <MangaContentForm
+                            title={dataMangaContentForm.name}
+                            content={dataMangaContentForm.review}
+                            showMangaContentForm={showMangaContentForm}
+                            setShowMangaContentForm={setShowMangaContentForm}
+                        />
+                    )}
+                </>
             ) : (
-                <div></div>
+                <div className={cx('list-wrap')}>
+                    {mangas.map((manga) => (
+                        <div key={manga._id} className={cx('manga-item')}>
+                            <MangaItem data={manga} itemStyle={itemStyle} />
+                        </div>
+                    ))}
+                </div>
             )}
         </div>
     )

@@ -27,6 +27,8 @@ const useLogin = () => {
         }
 
         setLoading(false)
+
+        return res.success
     }
 
     return { error, loading, login }
