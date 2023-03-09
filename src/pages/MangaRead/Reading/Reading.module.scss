@@ -39,5 +39,42 @@
                 }
             }
         }
+
+        .chapter-btn-wrap {
+            margin: 20px auto 30px;
+            padding: 15px;
+            width: 50%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            border-radius: 10px;
+            background-color: #222222;
+
+            .chapter-btn {
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                font-size: 1.2rem;
+                font-weight: 500;
+                line-height: 1.5;
+                white-space: nowrap;
+                border-radius: 4px;
+                color: #fff;
+                background-color: #444444;
+
+                & + .chapter-btn {
+                    margin-left: 8px;
+                }
+
+                &.disabled {
+                    opacity: 0.6;
+                    pointer-events: none;
+                }
+
+                svg {
+                    font-size: 1.5rem;
+                }
+            }
+        }
     }
 }

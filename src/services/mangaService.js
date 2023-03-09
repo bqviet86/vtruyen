@@ -99,6 +99,38 @@ const mangaService = {
         }
     },
 
+    updateReading: async (user, data) => {
+        user = typeof user === 'string' ? JSON.parse(user) : user
+
+        try {
+            const res = await httpRequest.post(`comics/updateReading/${user.email}`, data, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            })
+
+            return { success: true, data: res.data }
+        } catch (error) {
+            return { success: false, message: error.response.data.message }
+        }
+    },
+
+    getContinueReadingManga: async (user) => {
+        user = typeof user === 'string' ? JSON.parse(user) : user
+
+        try {
+            const res = await httpRequest.get(`comics/continue-reading/${user.email}`, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            })
+
+            return { success: true, data: res.data }
+        } catch (error) {
+            return { success: false, message: error.response.data.message }
+        }
+    },
+
     searchManga: async (keyword, type = 'less') => {
         try {
             const res = await httpRequest.get('comics/search', {

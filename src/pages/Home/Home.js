@@ -1,16 +1,20 @@
 import classNames from 'classnames/bind'
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 import Slider from './Slider'
 import MostView from './MostView'
 import MangaList from '~/components/MangaList'
 import Genres from '~/components/Genres'
+import { userSelector } from '~/redux/selectors'
 import images from '~/assets/images'
 import styles from './Home.module.scss'
 
 const cx = classNames.bind(styles)
 
 function Home() {
+    const user = useSelector(userSelector)
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('slider-wrap')}>
@@ -33,17 +37,19 @@ function Home() {
 
             <Genres less />
 
-            <div className={cx('manga-continue-reading')}>
-                <MangaList
-                    slider
-                    random
-                    content
-                    heading="Tiếp tục đọc"
-                    itemStyle="tertiary"
-                    displayItem={2}
-                    space={2}
-                />
-            </div>
+            {user && (
+                <div className={cx('manga-continue-reading')}>
+                    <MangaList
+                        slider
+                        continueReading
+                        content
+                        heading="Tiếp tục đọc"
+                        itemStyle="tertiary"
+                        displayItem={2}
+                        space={2}
+                    />
+                </div>
+            )}
 
             <div className={cx('manga-recommended')}>
                 <MangaList slider recommended heading="Truyện đề cử" displayItem={2} space={2} />
