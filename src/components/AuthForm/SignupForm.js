@@ -9,7 +9,7 @@ import styles from './AuthForm.module.scss'
 
 const cx = classNames.bind(styles)
 
-function SignupForm({ setShowAuthForm }) {
+function SignupForm({ handleCloseForm }) {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -28,7 +28,7 @@ function SignupForm({ setShowAuthForm }) {
                 setEmail('')
                 setPassword('')
                 setConfirmPassword('')
-                setShowAuthForm(false)
+                handleCloseForm()
             }
         }
     }

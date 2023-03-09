@@ -4,7 +4,7 @@ const handleScrollbar = {
     },
 
     appearScrollbar: () => {
-        document.body.style = ''
+        document.body.style.overflowY = 'overlay'
     },
 }
 

@@ -29,9 +29,9 @@ function AuthForm({ showAuthForm, setShowAuthForm }) {
         >
             <div className={cx('body')}>
                 {status === 'login' ? (
-                    <LoginForm setShowAuthForm={setShowAuthForm} />
+                    <LoginForm handleCloseForm={handleCloseForm} />
                 ) : (
-                    <SignupForm setShowAuthForm={setShowAuthForm} />
+                    <SignupForm handleCloseForm={handleCloseForm} />
                 )}
             </div>
 

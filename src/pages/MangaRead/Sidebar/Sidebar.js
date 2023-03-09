@@ -1,33 +1,17 @@
 import classNames from 'classnames/bind'
 import { Icon } from '@iconify/react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import Button from '~/components/Button'
 import ChapterList from '~/components/ChapterList'
-import { chapterService } from '~/services'
 import images from '~/assets/images'
 import styles from './Sidebar.module.scss'
 
 const cx = classNames.bind(styles)
 
-function Sidebar({ data, chapterNumber }) {
-    const [siblingChapter, setSiblingChapter] = useState(null)
+function Sidebar({ data, chapterNumber, siblingChapter }) {
     const [showSidebar, setShowSidebar] = useState(true)
-
-    useEffect(() => {
-        const fetchData = async () => {
-            if (data && chapterNumber) {
-                const res = await chapterService.getSiblingChapter(data._id, chapterNumber)
-
-                if (res.success) {
-                    setSiblingChapter(res.data)
-                }
-            }
-        }
-
-        fetchData()
-    }, [chapterNumber, data])
 
     const handleToggleSidebar = () => {
         setShowSidebar((prev) => !prev)

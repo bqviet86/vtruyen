@@ -17,6 +17,7 @@ function MangaItem({
     itemStyle = 'primary',
     remove = false,
     content = false,
+    continueReading = false,
     setShowMangaContentForm,
     setDataMangaContentForm,
 }) {
@@ -189,12 +190,18 @@ function MangaItem({
                     <div className={cx('chapter-btn')}>
                         {itemStyle === 'tertiary' ? (
                             <Button
-                                to={`/manga/read/${handleUrl.slug(data.slug)}/chap-${handleUrl.chapter(
-                                    data.newChapter.slice(8),
-                                )}`}
+                                to={`/manga/read/${handleUrl.slug(data.slug)}/chap-${
+                                    continueReading
+                                        ? data.currentChapNumber
+                                        : handleUrl.chapter(data.newChapter.slice(8))
+                                }`}
                                 quinary
                                 widthFull
-                                children={handleUrl.chapter(data.newChapter)}
+                                children={
+                                    continueReading
+                                        ? `Chapter ${data.currentChapNumber}`
+                                        : handleUrl.chapter(data['newChapter'])
+                                }
                                 size="md2"
                             />
                         ) : (

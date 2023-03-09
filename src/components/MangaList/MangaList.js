@@ -1,12 +1,14 @@
 import classNames from 'classnames/bind'
 import { Icon } from '@iconify/react'
 import { useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import MangaItem from './MangaItem'
 import Button from '~/components/Button'
 import MangaContentForm from '~/components/MangaContentForm'
 import { mangaService } from '~/services'
+import { userSelector } from '~/redux/selectors'
 import styles from './MangaList.module.scss'
 import 'swiper/css/bundle'
 
@@ -17,6 +19,7 @@ function MangaList({
     trending = false,
     recommended = false,
     completed = false,
+    continueReading = false,
     random = false,
     latestUpdate = false,
     remove = false,
@@ -26,6 +29,8 @@ function MangaList({
     displayItem = 1,
     space = 15,
 }) {
+    const user = useSelector(userSelector)
+
     const [mangas, setMangas] = useState([])
     const [disabledNavigationBtn, setDisabledNavigationBtn] = useState('prev')
     const [showMangaContentForm, setShowMangaContentForm] = useState(false)
@@ -59,11 +64,15 @@ function MangaList({
         (trending && mangaService.getTrendingManga) ||
         (recommended && mangaService.getRecommendedManga) ||
         (completed && mangaService.getCompletedManga) ||
+        (continueReading && mangaService.getContinueReadingManga) ||
         (random && mangaService.getRandomManga) ||
         (latestUpdate && mangaService.getLatestUpdateManga)
 
     const fetchData = async () => {
-        const res = random ? await service(randomComics.current) : await service()
+        const res =
+            (continueReading && (await service(user))) ||
+            (random && (await service(randomComics.current))) ||
+            (await service())
 
         if (res.success) {
             randomComics.current = res.data.randomComics
@@ -158,6 +167,7 @@ function MangaList({
                                         itemStyle={itemStyle}
                                         remove={remove}
                                         content={content}
+                                        continueReading={continueReading}
                                         setShowMangaContentForm={setShowMangaContentForm}
                                         setDataMangaContentForm={setDataMangaContentForm}
                                     />
