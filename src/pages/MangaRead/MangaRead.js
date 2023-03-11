@@ -7,6 +7,7 @@ import Sidebar from './Sidebar'
 import Reading from './Reading'
 import { mangaService, chapterService } from '~/services'
 import { userSelector } from '~/redux/selectors'
+import { handleUserState } from '~/utils'
 import styles from './MangaRead.module.scss'
 
 const cx = classNames.bind(styles)
@@ -23,7 +24,7 @@ function MangaRead() {
     useEffect(() => {
         const updateReading = async () => {
             if (user && manga) {
-                await mangaService.updateReading(user, {
+                await mangaService.updateReading(handleUserState(user), {
                     comicId: manga._id,
                     chapNumber: number,
                 })

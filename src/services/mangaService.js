@@ -99,11 +99,9 @@ const mangaService = {
         }
     },
 
-    updateReading: async (user, data) => {
-        user = typeof user === 'string' ? JSON.parse(user) : user
-
+    getContinueReadingManga: async (user) => {
         try {
-            const res = await httpRequest.post(`comics/updateReading/${user.email}`, data, {
+            const res = await httpRequest.get('comics/continue-reading', {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },
@@ -115,13 +113,25 @@ const mangaService = {
         }
     },
 
-    getContinueReadingManga: async (user) => {
-        user = typeof user === 'string' ? JSON.parse(user) : user
-
+    updateReading: async (user, data) => {
         try {
-            const res = await httpRequest.get(`comics/continue-reading/${user.email}`, {
+            const res = await httpRequest.post(`comics/updateReading/${user.email}`, data, {
                 headers: {
-                    Authorization: `Bearer ${user.token}`,
+                    'Content-Type': 'application/json',
+                },
+            })
+
+            return { success: true, data: res.data }
+        } catch (error) {
+            return { success: false, message: error.response.data.message }
+        }
+    },
+
+    removeReading: async (user, comicId) => {
+        try {
+            const res = await httpRequest.remove(`comics/removeReading/${user.email}/${comicId}`, {
+                headers: {
+                    'Content-Type': 'application/json',
                 },
             })
 

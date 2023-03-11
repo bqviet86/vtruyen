@@ -8,7 +8,9 @@ import MangaItem from './MangaItem'
 import Button from '~/components/Button'
 import MangaContentForm from '~/components/MangaContentForm'
 import { mangaService } from '~/services'
+import { useLogout } from '~/hooks'
 import { userSelector } from '~/redux/selectors'
+import { handleUserState } from '~/utils'
 import styles from './MangaList.module.scss'
 import 'swiper/css/bundle'
 
@@ -30,6 +32,7 @@ function MangaList({
     space = 15,
 }) {
     const user = useSelector(userSelector)
+    const { logout } = useLogout()
 
     const [mangas, setMangas] = useState([])
     const [disabledNavigationBtn, setDisabledNavigationBtn] = useState('prev')
@@ -70,13 +73,15 @@ function MangaList({
 
     const fetchData = async () => {
         const res =
-            (continueReading && (await service(user))) ||
+            (continueReading && (await service(handleUserState(user)))) ||
             (random && (await service(randomComics.current))) ||
             (await service())
 
         if (res.success) {
             randomComics.current = res.data.randomComics
             setMangas(random ? res.data.comics : res.data)
+        } else if (res.message === 'Request is not authorized') {
+            logout()
         }
     }
 
@@ -131,7 +136,7 @@ function MangaList({
                         <Button
                             rounded
                             roundSpace={6}
-                            color="=var(--secondary-text-color)"
+                            color="var(--secondary-text-color)"
                             bg="var(--quaternary-bg-color)"
                             children=<Icon icon="ph:caret-left-bold" />
                             disabled={disabledNavigationBtn === 'prev'}
@@ -139,7 +144,7 @@ function MangaList({
                         />
                         <Button
                             rounded
-                            color="=var(--secondary-text-color)"
+                            color="var(--secondary-text-color)"
                             bg="var(--quaternary-bg-color)"
                             children=<Icon icon="ph:caret-right-bold" />
                             disabled={disabledNavigationBtn === 'next'}
@@ -159,15 +164,17 @@ function MangaList({
                             onSlideChange={handleSlideChange}
                             breakpoints={breakpoints[itemStyle]}
                         >
-                            {mangas.map((manga) => (
+                            {mangas.map((manga, index) => (
                                 <SwiperSlide key={manga._id}>
                                     <MangaItem
+                                        index={index}
                                         trending={trending}
                                         data={manga}
                                         itemStyle={itemStyle}
                                         remove={remove}
                                         content={content}
                                         continueReading={continueReading}
+                                        setMangas={setMangas}
                                         setShowMangaContentForm={setShowMangaContentForm}
                                         setDataMangaContentForm={setDataMangaContentForm}
                                     />

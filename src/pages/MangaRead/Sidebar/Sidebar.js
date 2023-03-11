@@ -29,7 +29,7 @@ function Sidebar({ data, chapterNumber, siblingChapter }) {
                         <Button
                             rounded
                             to={`/manga/details/${data.slug}`}
-                            color="=var(--secondary-text-color)"
+                            color="var(--secondary-text-color)"
                             bg="var(--tertiary-bg-color)"
                             children=<Icon icon="tabler:arrow-left" />
                         />
@@ -40,7 +40,7 @@ function Sidebar({ data, chapterNumber, siblingChapter }) {
                     <Button
                         rounded
                         className={cx('toggle-btn', { 'showSidebar-btn': !showSidebar })}
-                        color="=var(--secondary-text-color)"
+                        color="var(--secondary-text-color)"
                         bg="var(--tertiary-bg-color)"
                         onClick={handleToggleSidebar}
                         children=<Icon icon={`ph:caret-${showSidebar ? 'left' : 'right'}-bold`} />

@@ -42,7 +42,7 @@ function Home() {
                     <MangaList
                         slider
                         continueReading
-                        content
+                        remove
                         heading="Tiếp tục đọc"
                         itemStyle="tertiary"
                         displayItem={2}
