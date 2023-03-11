@@ -2,25 +2,30 @@ import classNames from 'classnames/bind'
 import { Icon } from '@iconify/react'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import Menu from '~/components/Menu'
 import Button from '~/components/Button'
-import { chapterService } from '~/services'
-import { handleUrl, handleScrollbar, handleUpdateAt } from '~/utils'
+import { chapterService, mangaService } from '~/services'
+import { userSelector } from '~/redux/selectors'
+import { handleUrl, handleScrollbar, handleUpdateAt, handleUserState } from '~/utils'
 import styles from './MangaList.module.scss'
 
 const cx = classNames.bind(styles)
 
 function MangaItem({
+    index: position,
     trending = false,
     data,
     itemStyle = 'primary',
     remove = false,
     content = false,
     continueReading = false,
+    setMangas,
     setShowMangaContentForm,
     setDataMangaContentForm,
 }) {
+    const user = useSelector(userSelector)
     const [chapters, setChapters] = useState([])
 
     const handleOpenMangaContentForm = () => {
@@ -30,12 +35,18 @@ function MangaItem({
         setDataMangaContentForm(data)
     }
 
-    const defaultFunc = () => {}
+    const handleRemoveManga = async () => {
+        const res = await mangaService.removeReading(handleUserState(user), data._id)
+
+        if (res.success) {
+            setMangas((mangas) => mangas.filter((_, index) => index !== position))
+        }
+    }
 
     const menuItems = [
         {
             title: (remove && 'Xóa') || (content && 'Nội dung') || '',
-            onClick: (remove && defaultFunc) || (content && handleOpenMangaContentForm),
+            onClick: (remove && handleRemoveManga) || (content && handleOpenMangaContentForm),
             color: '#ddd',
             bg_color: '#3f3f3f',
         },
@@ -153,7 +164,13 @@ function MangaItem({
                 })}
             >
                 <div className={cx('poster')}>
-                    <Link to={`/manga/details/${data.slug}`}>
+                    <Link
+                        to={
+                            continueReading
+                                ? `/manga/read/${handleUrl.slug(data.slug)}/chap-${data.currentChapNumber}`
+                                : `/manga/details/${data.slug}`
+                        }
+                    >
                         <img src={data.thumbnail} alt="poster" />
                     </Link>
                 </div>
@@ -171,7 +188,15 @@ function MangaItem({
                         title={data.name}
                         style={((remove || content) && { paddingRight: 15 }) || {}}
                     >
-                        <Link to={`/manga/details/${data.slug}`}>{data.name}</Link>
+                        <Link
+                            to={
+                                continueReading
+                                    ? `/manga/read/${handleUrl.slug(data.slug)}/chap-${data.currentChapNumber}`
+                                    : `/manga/details/${data.slug}`
+                            }
+                        >
+                            {data.name}
+                        </Link>
                     </h4>
                     <div className={cx('genres')}>
                         {data.genres.map((genre, index) => {

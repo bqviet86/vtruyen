@@ -73,7 +73,7 @@ function Sidebar({ showSidebar, setShowSidebar }) {
                     <Button
                         rounded
                         roundSpace={6}
-                        color="=var(--secondary-text-color)"
+                        color="var(--secondary-text-color)"
                         bg="var(--tertiary-bg-color)"
                         children=<Icon icon="ph:caret-left-bold" />
                         onClick={handleCloseForm}

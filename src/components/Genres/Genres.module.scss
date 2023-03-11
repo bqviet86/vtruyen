@@ -8,6 +8,10 @@
     max-width: 100%;
     width: var(--width-layout);
 
+    @include styles.desktop-tablet {
+        padding: 0 15px;
+    }
+
     .btn {
         @include styles.tablet {
             @for $i from 14 through 55 {
