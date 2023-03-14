@@ -13,12 +13,7 @@ const chapterService = {
 
     getSiblingChapter: async (comicId, number) => {
         try {
-            const res = await httpRequest.get(`chapters`, {
-                params: {
-                    comicId,
-                    number,
-                },
-            })
+            const res = await httpRequest.get(`chapters/${comicId}/${number}`)
 
             return { success: true, data: res.data }
         } catch (error) {

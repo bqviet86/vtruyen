@@ -1,7 +1,7 @@
 import { httpRequest } from '~/utils'
 
 const mangaService = {
-    getDetailsManga: async (slug, type = '') => {
+    getDetailsManga: async (slug, type = 'full') => {
         try {
             const res = await httpRequest.get(`comics/details/${slug}`, {
                 params: {
@@ -85,13 +85,9 @@ const mangaService = {
         }
     },
 
-    getMostViewManga: async (type = 'less') => {
+    getMostViewManga: async () => {
         try {
-            const res = await httpRequest.get('comics/most-view', {
-                params: {
-                    type,
-                },
-            })
+            const res = await httpRequest.get('comics/most-view')
 
             return { success: true, data: res.data }
         } catch (error) {
@@ -115,7 +111,7 @@ const mangaService = {
 
     updateReading: async (user, data) => {
         try {
-            const res = await httpRequest.post(`comics/updateReading/${user.email}`, data, {
+            const res = await httpRequest.patch(`comics/updateReading/${user.email}`, data, {
                 headers: {
                     'Content-Type': 'application/json',
                 },

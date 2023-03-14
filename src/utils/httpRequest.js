@@ -14,6 +14,12 @@ export const post = async (path, data, options = {}) => {
     return response
 }
 
+export const patch = async (path, data, options = {}) => {
+    const response = await httpRequest.patch(path, data, options)
+
+    return response
+}
+
 export const remove = async (path, options = {}) => {
     const response = await httpRequest.delete(path, options)
 
