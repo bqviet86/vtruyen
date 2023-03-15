@@ -80,8 +80,6 @@ function MangaList({
         if (res.success) {
             randomComics.current = res.data.randomComics
             setMangas(random ? res.data.comics : res.data)
-        } else if (res.message === 'Request is not authorized') {
-            logout()
         }
     }
 

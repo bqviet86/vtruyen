@@ -28,6 +28,16 @@ const authService = {
             return { success: false, message: error.response.data.message }
         }
     },
+
+    refreshToken: async (user) => {
+        try {
+            const res = await httpRequest.get(`user/refreshToken/${user.email}`)
+
+            return { success: true, data: res.data }
+        } catch (error) {
+            return { success: false, message: error.response.data.message }
+        }
+    },
 }
 
 export default authService
