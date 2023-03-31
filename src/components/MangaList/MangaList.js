@@ -8,7 +8,6 @@ import MangaItem from './MangaItem'
 import Button from '~/components/Button'
 import MangaContentForm from '~/components/MangaContentForm'
 import { mangaService } from '~/services'
-import { useLogout } from '~/hooks'
 import { userSelector } from '~/redux/selectors'
 import { handleUserState } from '~/utils'
 import styles from './MangaList.module.scss'
@@ -32,7 +31,6 @@ function MangaList({
     space = 15,
 }) {
     const user = useSelector(userSelector)
-    const { logout } = useLogout()
 
     const [mangas, setMangas] = useState([])
     const [disabledNavigationBtn, setDisabledNavigationBtn] = useState('prev')
