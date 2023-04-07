@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import Image from '~/components/Image'
 import Loading from '~/components/Loading'
+import { imgProxyUrl } from '~/constant'
 import { pageService } from '~/services'
 import styles from './Reading.module.scss'
 
@@ -38,7 +39,7 @@ function Reading({ comicId, number, siblingChapter }) {
             <div className={cx('page-list')}>
                 {pages.map((page) => (
                     <div key={page._id} className={cx('page-item')}>
-                        <Image src={page.src} fallback={page.fallbackSrc} />
+                        <Image src={imgProxyUrl + page.src} fallback={imgProxyUrl + page.fallbackSrc} />
                         <div className={cx('loading')}>
                             <Loading type="quaternary" color="#6a6a6a" />
                             <p>Loading...</p>
