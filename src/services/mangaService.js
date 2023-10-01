@@ -126,9 +126,7 @@ const mangaService = {
     removeReading: async (user, comicId) => {
         try {
             const res = await httpRequest.remove(`comics/removeReading/${user.email}/${comicId}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
             })
 
             return { success: true, data: res.data }
